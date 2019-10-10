@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern":
+    [
+        "B",
+        "B",
+        "S"
+    ],
+    
+    "key":
+    {
+        "B":
+        {
+            "item": "soulforgery:igrian_ingot"
+        },
+        
+        "S":
+        {
+            "item": "minecraft:stick"
+        }
+    },
+    
+    "result":
+    {
+        "item": "soulforgery:igrian_sword",
+        "count": 1
+    }
+}

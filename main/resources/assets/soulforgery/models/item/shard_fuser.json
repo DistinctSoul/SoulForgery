@@ -1,0 +1,6 @@
+{
+   "parent": "soulforgery:block/shard_fuser",
+   "textures": {
+       "layer0": "soulforgery:items/shard_fuser"
+   }
+}

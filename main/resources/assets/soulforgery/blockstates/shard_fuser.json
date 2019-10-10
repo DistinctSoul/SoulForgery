@@ -1,0 +1,13 @@
+{
+    "variants": {
+        "active=false, facing=north": { "model": "soulforgery:shard_fuser" },
+        "active=false, facing=south": { "model": "soulforgery:shard_fuser", "y": 180 },
+        "active=false, facing=east": { "model": "soulforgery:shard_fuser", "y": 90 },
+        "active=false, facing=west": { "model": "soulforgery:shard_fuser", "y": 270 },
+        "active=true, facing=north": { "model": "soulforgery:shard_fuser_active" },
+        "active=true, facing=south": { "model": "soulforgery:shard_fuser_active", "y": 180 },
+        "active=true, facing=east": { "model": "soulforgery:shard_fuser_active", "y": 90 },
+        "active=true, facing=west": { "model": "soulforgery:shard_fuser_active", "y": 270 }
+        
+    }
+}
