@@ -157,6 +157,10 @@ public class TileEntityShardFuser extends TileEntity implements ITickable {
 		}
 	}
 	
+	public int getFuseTime(ItemStack stack) {
+		return 200;
+	}
+	
 	private boolean canFuse() {
 		
 		if (((ItemStack)this.handler.getStackInSlot(0)).isEmpty() || ((ItemStack)this.handler.getStackInSlot(1)).isEmpty()) return false;

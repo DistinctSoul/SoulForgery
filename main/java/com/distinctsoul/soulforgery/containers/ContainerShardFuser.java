@@ -1,5 +1,7 @@
 package com.distinctsoul.soulforgery.containers;
 
+import com.distinctsoul.soulforgery.containers.slots.SlotShardFuserFuel;
+import com.distinctsoul.soulforgery.containers.slots.SlotShardFuserOutput;
 import com.distinctsoul.soulforgery.recipes.ShardFuserRecipes;
 import com.distinctsoul.soulforgery.tileentity.TileEntityShardFuser;
 
@@ -7,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
@@ -16,27 +19,26 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerShardFuser extends Container {
-	private final TileEntityShardFuser tileentity;
+	private final IInventory tileShardFuser;
 	private int fuseTime, totalFuseTime, chargeTime, currentChargeTime;
 	
-	public ContainerShardFuser(InventoryPlayer player, TileEntityShardFuser tileentity) {
-		this.tileentity = tileentity;
-		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+	public ContainerShardFuser(InventoryPlayer playerInventory, IInventory shardFuserInventory) {
+		this.tileShardFuser = shardFuserInventory;
 		
-		this.addSlotToContainer(new SlotItemHandler(handler, 0, 56, 23));
-		this.addSlotToContainer(new SlotItemHandler(handler, 1, 56, 47));
-		this.addSlotToContainer(new SlotItemHandler(handler, 2, 17, 47));
-		this.addSlotToContainer(new SlotItemHandler(handler, 3, 118, 35));
+		this.addSlotToContainer(new Slot(shardFuserInventory, 0, 56, 23));
+		this.addSlotToContainer(new Slot(shardFuserInventory, 1, 56, 47));
+		this.addSlotToContainer(new SlotShardFuserFuel(shardFuserInventory, 2, 17, 47));
+		this.addSlotToContainer(new SlotShardFuserOutput(playerInventory.player, shardFuserInventory, 3, 118, 35));
 		
 		for(int y = 0; y < 3; y++) {
 			
 			for(int x = 0; x < 9; x++) {
-				this.addSlotToContainer(new Slot(player, x + y*9 + 9, 8 + x*18, 84 + y*18));
+				this.addSlotToContainer(new Slot(playerInventory, x + y*9 + 9, 8 + x*18, 84 + y*18));
 			}
 		}
 		
 		for(int x = 0; x < 9; x++) {
-			this.addSlotToContainer(new Slot(player, x, 8 + x*18, 142));
+			this.addSlotToContainer(new Slot(playerInventory, x, 8 + x*18, 142));
 		}
 	}
 	
@@ -47,27 +49,27 @@ public class ContainerShardFuser extends Container {
 		for(int i = 0; i < this.listeners.size(); ++i) {
 			IContainerListener listener = (IContainerListener)this.listeners.get(i);
 			
-			if (this.fuseTime != this.tileentity.getField(2)) listener.sendWindowProperty(this, 2, this.tileentity.getField(2));
-			if (this.chargeTime != this.tileentity.getField(0)) listener.sendWindowProperty(this, 0, this.tileentity.getField(0));
-			if (this.currentChargeTime != this.tileentity.getField(1)) listener.sendWindowProperty(this, 1, this.tileentity.getField(1));
-			if (this.totalFuseTime != this.tileentity.getField(3)) listener.sendWindowProperty(this, 3, this.tileentity.getField(3));
+			if (this.fuseTime != this.tileShardFuser.getField(2)) listener.sendWindowProperty(this, 2, this.tileShardFuser.getField(2));
+			if (this.chargeTime != this.tileShardFuser.getField(0)) listener.sendWindowProperty(this, 0, this.tileShardFuser.getField(0));
+			if (this.currentChargeTime != this.tileShardFuser.getField(1)) listener.sendWindowProperty(this, 1, this.tileShardFuser.getField(1));
+			if (this.totalFuseTime != this.tileShardFuser.getField(3)) listener.sendWindowProperty(this, 3, this.tileShardFuser.getField(3));
 		}
 		
-		this.fuseTime = this.tileentity.getField(2);
-		this.chargeTime = this.tileentity.getField(0);
-		this.currentChargeTime = this.tileentity.getField(1);
-		this.totalFuseTime = this.tileentity.getField(3);
+		this.fuseTime = this.tileShardFuser.getField(2);
+		this.chargeTime = this.tileShardFuser.getField(0);
+		this.currentChargeTime = this.tileShardFuser.getField(1);
+		this.totalFuseTime = this.tileShardFuser.getField(3);
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void updateProgressBar(int id, int data) {
-		this.tileentity.setField(id, data);
+		this.tileShardFuser.setField(id, data);
 	}
 	
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) {
-		return this.tileentity.isUsableByPlayer(playerIn);
+		return this.tileShardFuser.isUsableByPlayer(playerIn);
 	}
 	
 	@Override
