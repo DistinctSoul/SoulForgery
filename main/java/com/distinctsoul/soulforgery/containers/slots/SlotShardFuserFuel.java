@@ -5,11 +5,13 @@ import com.distinctsoul.soulforgery.tileentity.TileEntityShardFuser;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
-public class SlotShardFuserFuel extends Slot {
+public class SlotShardFuserFuel extends SlotItemHandler {
 	
-	public SlotShardFuserFuel(IInventory inventory, int index, int x, int y) {
-		super(inventory, index, x, y);
+	public SlotShardFuserFuel(IItemHandler itemHandler, int index, int x, int y) {
+		super(itemHandler, index, x, y);
 	}
 	
 	@Override

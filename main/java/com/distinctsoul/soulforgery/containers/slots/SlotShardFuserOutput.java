@@ -4,13 +4,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
-public class SlotShardFuserOutput extends Slot {
+public class SlotShardFuserOutput extends SlotItemHandler {
 	private final EntityPlayer player;
 	private int removeCount;
 	
-	public SlotShardFuserOutput(EntityPlayer player, IInventory inventory, int index, int x, int y) {
-		super(inventory, index, x, y);
+	public SlotShardFuserOutput(EntityPlayer player, IItemHandler itemHandler, int index, int x, int y) {
+		super(itemHandler, index, x, y);
 		this.player = player;
 	}
 	

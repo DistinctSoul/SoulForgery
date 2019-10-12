@@ -9,7 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
@@ -19,16 +18,17 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerShardFuser extends Container {
-	private final IInventory tileShardFuser;
+	private final TileEntityShardFuser tileShardFuser;
 	private int fuseTime, totalFuseTime, chargeTime, currentChargeTime;
 	
-	public ContainerShardFuser(InventoryPlayer playerInventory, IInventory shardFuserInventory) {
-		this.tileShardFuser = shardFuserInventory;
+	public ContainerShardFuser(InventoryPlayer playerInventory, TileEntityShardFuser tileShardFuser) {
+		this.tileShardFuser = tileShardFuser;
+		IItemHandler handler = tileShardFuser.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 		
-		this.addSlotToContainer(new Slot(shardFuserInventory, 0, 56, 23));
-		this.addSlotToContainer(new Slot(shardFuserInventory, 1, 56, 47));
-		this.addSlotToContainer(new SlotShardFuserFuel(shardFuserInventory, 2, 17, 47));
-		this.addSlotToContainer(new SlotShardFuserOutput(playerInventory.player, shardFuserInventory, 3, 118, 35));
+		this.addSlotToContainer(new SlotItemHandler(handler, 0, 56, 23));
+		this.addSlotToContainer(new SlotItemHandler(handler, 1, 56, 47));
+		this.addSlotToContainer(new SlotShardFuserFuel(handler, 2, 17, 47));
+		this.addSlotToContainer(new SlotShardFuserOutput(playerInventory.player, handler, 3, 118, 35));
 		
 		for(int y = 0; y < 3; y++) {
 			
