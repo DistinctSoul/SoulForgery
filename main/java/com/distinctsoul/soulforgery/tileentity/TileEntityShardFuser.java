@@ -2,6 +2,7 @@ package com.distinctsoul.soulforgery.tileentity;
 
 import com.distinctsoul.soulforgery.blocks.machines.BlockShardFuser;
 import com.distinctsoul.soulforgery.recipes.ShardFuserRecipes;
+import com.distinctsoul.soulforgery.util.handlers.OutputItemStackHandler;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,6 +29,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class TileEntityShardFuser extends TileEntity implements ITickable {
+	protected ItemStackHandler outputSlot;
+	private ItemStackHandler outputSlotWrapper;
 	private ItemStackHandler handler = new ItemStackHandler(4);
 	private String customName;
 	private ItemStack fusing = ItemStack.EMPTY;
@@ -36,6 +39,11 @@ public class TileEntityShardFuser extends TileEntity implements ITickable {
 	private int currentChargeTime;
 	private int fuseTime;
 	private int totalFuseTime = 200;
+	
+	public TileEntityShardFuser() {
+		outputSlot = new ItemStackHandler();
+		outputSlotWrapper = new OutputItemStackHandler(outputSlot);
+	}
 	
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
