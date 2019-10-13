@@ -1,11 +1,12 @@
 {
     "__comment": "Model generated using MrCrayfish's Model Creator (https://mrcrayfish.com/tools?id=mc)",
     "textures": {
+        "particle": "minecraft:blocks/furnace_top",
         "button": "minecraft:blocks/iron_block",
-        "shard_fuser": "minecraft:blocks/shard_fuser",
+        "shard_fuser": "soulforgery:blocks/shard_fuser",
         "anvil_base": "minecraft:blocks/anvil_base",
         "furnace_top": "minecraft:blocks/furnace_top",
-        "shard_fuser_top": "minecraft:blocks/shard_fuser_top"
+        "shard_fuser_top": "soulforgery:blocks/shard_fuser_top"
     },
     "display": {
         "gui": {

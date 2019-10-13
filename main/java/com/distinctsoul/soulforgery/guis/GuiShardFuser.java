@@ -42,7 +42,7 @@ public class GuiShardFuser extends GuiContainer {
 		
 		if (TileEntityShardFuser.isActive(tileentity)) {
 			int k = this.getChargeLeftScaled(18);
-			this.drawTexturedModalRect(this.guiLeft + 19, this.guiTop + 40 + 18 - k, 176, 18 - k, 14, k + 1);
+			this.drawTexturedModalRect(this.guiLeft + 18, this.guiTop + 22 + 18 - k, 176, 18 - k, 14, k + 1);
 		}
 		
 		int l = this.getFuseProgressScaled(36);
