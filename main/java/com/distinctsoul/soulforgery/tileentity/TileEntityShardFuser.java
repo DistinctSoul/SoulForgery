@@ -18,6 +18,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -106,66 +107,58 @@ public class TileEntityShardFuser extends TileEntity implements ITickable {
 	}
 	
 	public void update() {
+		boolean flag = this.isActive();
+		boolean flag1 = false;
 		
-		if (this.isActive()) {
-			--this.chargeTime;
-			BlockShardFuser.setState(true, world, pos);
-		}
+		if (this.isActive()) this.chargeTime--;
 		
-		ItemStack[] inputs = new ItemStack[] {handler.getStackInSlot(0), handler.getStackInSlot(1)};
-		ItemStack spiritFuel = this.handler.getStackInSlot(2);
-		
-		if (this.isActive() || !spiritFuel.isEmpty() && !this.handler.getStackInSlot(0).isEmpty() || this.handler.getStackInSlot(1).isEmpty()) {
+		if (!this.world.isRemote) {
+			ItemStack spiritFuel = this.handler.getStackInSlot(2);
 			
-			if (!this.isActive() && this.canFuse()) {
-				this.chargeTime = getItemChargeTime(spiritFuel);
-				this.currentChargeTime = chargeTime;
+			if (this.isActive() || !spiritFuel.isEmpty() && !this.handler.getStackInSlot(0).isEmpty() || this.handler.getStackInSlot(1).isEmpty()) {
 				
-				if (this.isActive() && !spiritFuel.isEmpty()) {
-					Item item = spiritFuel.getItem();
-					spiritFuel.shrink(1);
+				if (!this.isActive() && this.canFuse()) {
+					this.chargeTime = getItemChargeTime(spiritFuel);
+					this.currentChargeTime = this.chargeTime;
 					
-					if (spiritFuel.isEmpty()) {
-						ItemStack item1 = item.getContainerItem(spiritFuel);
-						this.handler.setStackInSlot(2, item1);
+					if (this.isActive() && !spiritFuel.isEmpty()) {
+						Item item = spiritFuel.getItem();
+						spiritFuel.shrink(1);
+						
+						if (spiritFuel.isEmpty()) {
+							ItemStack item1 = item.getContainerItem(spiritFuel);
+							this.handler.setStackInSlot(2, item1);
+						}
 					}
 				}
 			}
+			
+			if (this.isActive() && this.canFuse()) {
+				this.fuseTime++;
+				
+				if (this.fuseTime == this.totalFuseTime) {
+					
+					this.fuseTime = 0;
+					this.totalFuseTime = this.getFuseTime((ItemStack)this.handler.getStackInSlot(0), (ItemStack)this.handler.getStackInSlot(1));
+					this.fuseItem();
+				}
+			}
+			else this.fuseTime = 0;
+		}
+			
+		else if (!this.isActive() && this.fuseTime > 0) {
+			this.fuseTime = MathHelper.clamp(this.fuseTime - 2, 0, this.totalFuseTime);
+		}
+			
+		if (flag != this.isActive()) {
+			flag1 = true;
+			BlockShardFuser.setState(this.isActive(), this.world, this.pos);
 		}
 		
-		if (this.isActive() && this.canFuse() && fuseTime > 0) {
-			fuseTime++;
-			
-			if (fuseTime == totalFuseTime) {
-				
-				if (handler.getStackInSlot(3).getCount() > 0) {
-					handler.getStackInSlot(3).grow(1);
-				} else {
-					handler.insertItem(3, fusing, false);
-				}
-				
-				fusing = ItemStack.EMPTY;
-				fuseTime = 0;
-				return;
-			}
-		} else {
-			
-			if (this.canFuse() && this.isActive()) {
-				ItemStack output = ShardFuserRecipes.getInstance().getFusingResult(inputs[0], inputs[1]);
-				
-				if (!output.isEmpty()) {
-					fusing = output;
-					fuseTime++;
-					inputs[0].shrink(1);
-					inputs[1].shrink(1);
-					handler.setStackInSlot(1, inputs[0]);
-					handler.setStackInSlot(1, inputs[1]);
-				}
-			}
-		}
+		if (flag1) this.markDirty();
 	}
 	
-	public int getFuseTime(ItemStack stack) {
+	public int getFuseTime(ItemStack input1, ItemStack input2) {
 		return 200;
 	}
 	
@@ -183,6 +176,22 @@ public class TileEntityShardFuser extends TileEntity implements ITickable {
 				int resCount = output.getCount() + result.getCount();
 				return resCount <= 64 && resCount <= output.getMaxStackSize();
 			}
+		}
+	}
+	
+	public void fuseItem() {
+		
+		if (this.canFuse()) {
+			ItemStack input1 = (ItemStack)this.handler.getStackInSlot(0);
+			ItemStack input2 = (ItemStack)this.handler.getStackInSlot(1);
+			ItemStack result = ShardFuserRecipes.getInstance().getFusingResult(input1, input2);
+			ItemStack output = (ItemStack)this.handler.getStackInSlot(3);
+			
+			if (output.isEmpty()) this.handler.setStackInSlot(3, result.copy());
+			else if (output.getItem() == result.getItem()) output.grow(result.getCount());
+			
+			input1.shrink(1);
+			input2.shrink(1);
 		}
 	}
 	
