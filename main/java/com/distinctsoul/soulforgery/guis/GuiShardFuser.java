@@ -21,6 +21,13 @@ public class GuiShardFuser extends GuiContainer {
 	}
 	
 	@Override
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		drawDefaultBackground();
+		super.drawScreen(mouseX, mouseY, partialTicks);
+		this.renderHoveredToolTip(mouseX, mouseY);
+	}
+	
+	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		String tileName = this.tileentity.getDisplayName().getUnformattedText();
 		this.fontRenderer.drawString(tileName, (this.xSize / 2 - this.fontRenderer.getStringWidth(tileName) / 2) + 3, 8, 4210752);
@@ -39,7 +46,7 @@ public class GuiShardFuser extends GuiContainer {
 		}
 		
 		int l = this.getFuseProgressScaled(36);
-		this.drawTexturedModalRect(this.guiLeft + 75, this.guiTop + 29, 176, 14, l + 1, 16);
+		this.drawTexturedModalRect(this.guiLeft + 75, this.guiTop + 22, 176, 19, l + 1, 28);
 	}
 	
 	private int getChargeLeftScaled(int pixels) {
