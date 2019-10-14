@@ -102,8 +102,8 @@ public class TileEntityShardFuser extends TileEntity implements ITickable {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public static boolean isActive(TileEntityShardFuser te) {
-		return te.getField(0) > 0;
+	public static boolean isActive(TileEntityShardFuser tileentity) {
+		return tileentity.getField(0) > 0;
 	}
 	
 	public void update() {
@@ -230,6 +230,8 @@ public class TileEntityShardFuser extends TileEntity implements ITickable {
 			return this.currentChargeTime;
 		case 2:
 			return this.fuseTime;
+		case 3:
+			return this.totalFuseTime;
 		default:
 			return 0;
 		}
@@ -250,5 +252,9 @@ public class TileEntityShardFuser extends TileEntity implements ITickable {
 		case 3:
 			this.totalFuseTime = value;
 		}
+	}
+	
+	public int getFieldCount() {
+		return 4;
 	}
 }

@@ -58,8 +58,8 @@ public class BlockShardFuser extends Block {
 	}
 	
 	@Override
-	public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-		return new ItemStack(ModBlocks.SHARD_FUSER);
+	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
+		this.setDefaultFacing(worldIn, pos, state);
 	}
 	
 	@Override
@@ -72,11 +72,9 @@ public class BlockShardFuser extends Block {
 		return true;
 	}
 	
-	@Override
-	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) 
-	{
-		if (!worldIn.isRemote) 
-        {
+	private void setDefaultFacing(World worldIn, BlockPos pos, IBlockState state) {
+		
+		if (!worldIn.isRemote) {
             IBlockState north = worldIn.getBlockState(pos.north());
             IBlockState south = worldIn.getBlockState(pos.south());
             IBlockState west = worldIn.getBlockState(pos.west());
@@ -116,7 +114,7 @@ public class BlockShardFuser extends Block {
 	}
 	
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY,
-			float hitZ, int meta, EntityLivingBase placer) {
+			float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
 		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
 	}
 	
@@ -165,16 +163,16 @@ public class BlockShardFuser extends Block {
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[] { ACTIVE, FACING });
+		return new BlockStateContainer(this, FACING, ACTIVE);
 	}
 	
 	@Override
 	public IBlockState withRotation(IBlockState state, Rotation rot) {
-		return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
+		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
 	}
 	
 	@Override
 	public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
-		return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
+		return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
 	}
 }
