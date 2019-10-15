@@ -2,6 +2,8 @@ package com.distinctsoul.soulforgery.blocks.machines;
 
 import java.util.Random;
 
+import javax.annotation.Nonnull;
+
 import com.distinctsoul.soulforgery.Main;
 import com.distinctsoul.soulforgery.init.ModBlocks;
 import com.distinctsoul.soulforgery.init.ModItems;
@@ -58,11 +60,6 @@ public class BlockShardFuser extends Block {
 	}
 	
 	@Override
-	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-		this.setDefaultFacing(worldIn, pos, state);
-	}
-	
-	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
 		if(!worldIn.isRemote) {
@@ -70,24 +67,6 @@ public class BlockShardFuser extends Block {
 		}
 		
 		return true;
-	}
-	
-	private void setDefaultFacing(World worldIn, BlockPos pos, IBlockState state) {
-		
-		if (!worldIn.isRemote) {
-            IBlockState north = worldIn.getBlockState(pos.north());
-            IBlockState south = worldIn.getBlockState(pos.south());
-            IBlockState west = worldIn.getBlockState(pos.west());
-            IBlockState east = worldIn.getBlockState(pos.east());
-            EnumFacing face = (EnumFacing)state.getValue(FACING);
-
-            if (face == EnumFacing.NORTH && north.isFullBlock() && !south.isFullBlock()) face = EnumFacing.SOUTH;
-            else if (face == EnumFacing.SOUTH && south.isFullBlock() && !north.isFullBlock()) face = EnumFacing.NORTH;
-            else if (face == EnumFacing.WEST && west.isFullBlock() && !east.isFullBlock()) face = EnumFacing.EAST;
-            else if (face == EnumFacing.EAST && east.isFullBlock() && !west.isFullBlock()) face = EnumFacing.WEST;
-            
-            worldIn.setBlockState(pos, state.withProperty(FACING, face), 2);
-        }
 	}
 	
 	public static void setState(boolean active, World worldIn, BlockPos pos) {
