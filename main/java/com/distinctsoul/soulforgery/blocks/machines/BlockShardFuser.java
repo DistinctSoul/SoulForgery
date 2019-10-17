@@ -44,7 +44,7 @@ public class BlockShardFuser extends Block {
 	public BlockShardFuser() {
 		super(Material.ROCK);
 		setCreativeTab(Main.SOUL_FORGERY);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(ACTIVE, false));
+		this.setDefaultState(this.blockState.getBaseState().withProperty(BlockHorizontal.FACING, EnumFacing.NORTH).withProperty(ACTIVE, false));
 		setSoundType(SoundType.STONE);
 		setHardness(3.0F);
 		setResistance(20.0F);
@@ -64,6 +64,7 @@ public class BlockShardFuser extends Block {
 		
 		if(!worldIn.isRemote) {
 			playerIn.openGui(Main.instance, Main.GUI_SHARD_FUSER, worldIn, pos.getX(), pos.getY(), pos.getZ());
+			return true;
 		}
 		
 		return true;
@@ -73,8 +74,11 @@ public class BlockShardFuser extends Block {
 		IBlockState state = worldIn.getBlockState(pos);
 		TileEntity tileentity = worldIn.getTileEntity(pos);
 		
-		if(active) worldIn.setBlockState(pos, ModBlocks.SHARD_FUSER.getDefaultState().withProperty(FACING, state.getValue(FACING)).withProperty(ACTIVE, true), 3);
-		else worldIn.setBlockState(pos, ModBlocks.SHARD_FUSER.getDefaultState().withProperty(FACING, state.getValue(FACING)).withProperty(ACTIVE, false), 3);
+		if (active) {
+			worldIn.setBlockState(pos, ModBlocks.SHARD_FUSER.getDefaultState().withProperty(FACING, state.getValue(FACING)).withProperty(ACTIVE, true), 3);
+		} else {
+			worldIn.setBlockState(pos, ModBlocks.SHARD_FUSER.getDefaultState().withProperty(FACING, state.getValue(FACING)).withProperty(ACTIVE, false), 3);
+		}
 		
 		if (tileentity != null) {
 			tileentity.validate();
@@ -123,26 +127,17 @@ public class BlockShardFuser extends Block {
 		return SHARD_FUSER_AABB;
 	}
 	
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, new IProperty[] { BlockHorizontal.FACING, ACTIVE});
+	}
+	
 	public IBlockState getStateFromMeta(int meta) {
-		EnumFacing facing = EnumFacing.byIndex(meta);
-		
-		if (facing.getAxis() == EnumFacing.Axis.Y) {
-            facing = EnumFacing.NORTH;
-        }
-		
-		return this.getDefaultState().withProperty(FACING, facing);
+		return this.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.byHorizontalIndex(meta));
 	}
 	
 	public int getMetaFromState(IBlockState state) {
-		EnumFacing facing = (EnumFacing)state.getValue(FACING);
-		
-		int facingbits = facing.getHorizontalIndex();
-		return facingbits;
-	}
-	
-	@Override
-	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, FACING, ACTIVE);
+		return state.getValue(BlockHorizontal.FACING).getHorizontalIndex();
 	}
 	
 	@Override
