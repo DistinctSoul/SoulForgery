@@ -1,0 +1,17 @@
+// Creative Tabs
+itemGroup.soulforgery=Soul Forgery
+
+// Items
+item.soulforgery.tainted_soul.name=Tainted Soul
+item.soulforgery.igrian_shards.name=Igrian Shards
+item.soulforgery.igrian_ingot.name=Igrian Ingot
+
+// Blocks
+tile.soulforgery.igrian_ore.name=Igrian Ore
+tile.soulforgery.shard_fuser.name=Shard Fuser
+
+// Tools
+item.soulforgery.igrian_sword.name=Soul Reaper
+
+// Containers
+container.shard_fuser=Shard Fuser

@@ -1,0 +1,56 @@
+{
+    "type": "minecraft:crafting_shaped",
+    
+    "pattern":
+    [
+        "SES",
+        "WPW",
+        "CIC"
+    ],
+    
+    "key":
+    {
+        "S":
+        {
+            "item": "minecraft:stone_slab",
+            "data": 3
+        },
+        
+        "E":
+        {
+            "item": "minecraft:emerald",
+            "data": 0
+        },
+        
+        "W":
+        {
+            "item": "minecraft:cobblestone_wall",
+            "data": 0
+        },
+        
+        "P":
+        {
+            "item": "minecraft:heavy_weighted_pressure_plate",
+            "data": 0
+        },
+        
+        "C":
+        {
+            "item": "minecraft:cobblestone",
+            "data": 0
+        },
+        
+        "I":
+        {
+            "item": "minecraft:iron_ingot",
+            "data": 0
+        }
+    },
+    
+    "result":
+    {
+        "item": "soulforgery:shard_fuser",
+        "data": 0,
+        "count": 1
+    }
+}

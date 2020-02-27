@@ -1,0 +1,15 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "facing": {
+            "north": {},
+            "south": {"y": 180},
+            "east": {"y": 90},
+            "west": {"y": -90}
+        },
+        "active": {
+            "true": { "model": "soulforgery:shard_fuser_active" },
+            "false": { "model": "soulforgery:shard_fuser" }
+        }
+    }
+}
