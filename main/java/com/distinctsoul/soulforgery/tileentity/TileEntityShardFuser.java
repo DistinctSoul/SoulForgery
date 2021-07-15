@@ -8,8 +8,6 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -17,13 +15,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -31,10 +27,8 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileEntityShardFuser extends TileEntity implements ITickable {
 	protected ItemStackHandler outputSlot;
-	private ItemStackHandler outputSlotWrapper;
 	private ItemStackHandler handler = new ItemStackHandler(4);
 	private String customName;
-	private ItemStack fusing = ItemStack.EMPTY;
 	
 	private int chargeTime;
 	private int currentChargeTime;
@@ -43,7 +37,7 @@ public class TileEntityShardFuser extends TileEntity implements ITickable {
 	
 	public TileEntityShardFuser() {
 		outputSlot = new ItemStackHandler();
-		outputSlotWrapper = new OutputItemStackHandler(outputSlot);
+		new OutputItemStackHandler(outputSlot);
 	}
 	
 	@Override
@@ -53,6 +47,7 @@ public class TileEntityShardFuser extends TileEntity implements ITickable {
 		else return false;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		
@@ -210,7 +205,8 @@ public class TileEntityShardFuser extends TileEntity implements ITickable {
 			
 			if (item == Items.GLOWSTONE_DUST) return 200;
 		}
-		return GameRegistry.getFuelValue(spiritFuel);
+		int chargeTime = getItemChargeTime(spiritFuel);
+		return chargeTime;
 	}
 	
 	public static boolean isItemSpiritFuel(ItemStack spiritFuel) {

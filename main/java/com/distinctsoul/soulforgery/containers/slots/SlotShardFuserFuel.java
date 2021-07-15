@@ -2,8 +2,6 @@ package com.distinctsoul.soulforgery.containers.slots;
 
 import com.distinctsoul.soulforgery.tileentity.TileEntityShardFuser;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;

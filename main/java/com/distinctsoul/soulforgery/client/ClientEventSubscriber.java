@@ -1,8 +1,8 @@
 package com.distinctsoul.soulforgery.client;
 
 import com.distinctsoul.soulforgery.Main;
-import com.distinctsoul.soulforgery.init.ModBlocks;
-import com.distinctsoul.soulforgery.init.ModItems;
+import com.distinctsoul.soulforgery.init.BlockInit;
+import com.distinctsoul.soulforgery.init.ItemInit;
 import com.google.common.base.Preconditions;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -37,13 +37,15 @@ public final class ClientEventSubscriber {
 						.filter(block -> block.getRegistryName().getNamespace().equals(Main.MODID))
 						.forEach(ClientEventSubscriber::registerItemBlockModel);
 		
-		registerItemBlockModel(ModBlocks.IGRIAN_ORE);
-		registerItemBlockModel(ModBlocks.SHARD_FUSER);
+		registerItemBlockModel(BlockInit.IGRIAN_ORE);
+		registerItemBlockModel(BlockInit.SHARD_FUSER);
 		
-		registerItemModel(ModItems.IGRIAN_INGOT);
-		registerItemModel(ModItems.IGRIAN_SHARDS);
-		registerItemModel(ModItems.TAINTED_SOUL);
-		registerItemModel(ModItems.IGRIAN_SWORD);
+		registerItemModel(ItemInit.IGRIAN_INGOT);
+		registerItemModel(ItemInit.IGRIAN_SHARDS);
+		registerItemModel(ItemInit.TAINTED_SOUL);
+		registerItemModel(ItemInit.CORRUPTED_SOUL);
+		registerItemModel(ItemInit.IGRIAN_SWORD);
+		registerItemModel(ItemInit.LIVING_CLOTH);
 		
 		LOGGER.debug("Registered models");
 	}
@@ -65,7 +67,7 @@ public final class ClientEventSubscriber {
 	@SubscribeEvent
 	public static void onTextureStitchEvent(@Nonnull final TextureStitchEvent event) {
 		// Register texture for Shard Fuser
-		final ResourceLocation registryName = ModBlocks.SHARD_FUSER.getRegistryName();
+		final ResourceLocation registryName = BlockInit.SHARD_FUSER.getRegistryName();
 		event.getMap().registerSprite(new ResourceLocation(registryName.getNamespace(), "blocks/" + registryName.getPath()));
 	}
 }

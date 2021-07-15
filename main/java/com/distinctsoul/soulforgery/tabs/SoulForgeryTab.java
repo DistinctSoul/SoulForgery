@@ -1,7 +1,7 @@
 package com.distinctsoul.soulforgery.tabs;
 
 import com.distinctsoul.soulforgery.Main;
-import com.distinctsoul.soulforgery.init.ModItems;
+import com.distinctsoul.soulforgery.init.ItemInit;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -16,7 +16,7 @@ public class SoulForgeryTab extends CreativeTabs {
 	
 	@SideOnly(Side.CLIENT)
 	@Override
-	public ItemStack createIcon() {
-		return new ItemStack(ModItems.IGRIAN_INGOT);
+	public ItemStack getTabIconItem() {
+		return new ItemStack(ItemInit.IGRIAN_INGOT);
 	}
 }

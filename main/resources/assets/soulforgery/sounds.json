@@ -1,0 +1,19 @@
+{
+    "entity.wraith.ambient": {
+        "category": "entity",
+        "subtitle": "entity.wraith.ambient",
+        "sounds": [{ "name": "soulforgery:entity/wraith/ambient", "stream": true}]
+    },
+    
+    "entity.wraith.hurt": {
+        "category": "entity",
+        "subtitle": "entity.wraith.hurt",
+        "sounds": [{ "name": "soulforgery:entity/wraith/hurt", "stream": true}]
+    },
+    
+    "entity.wraith.death": {
+        "category": "entity",
+        "subtitle": "entity.wraith.death",
+        "sounds": [{ "name": "soulforgery:entity/wraith/death", "stream": true}]
+    }
+}

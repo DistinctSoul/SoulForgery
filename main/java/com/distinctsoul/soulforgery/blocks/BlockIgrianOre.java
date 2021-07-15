@@ -3,7 +3,7 @@ package com.distinctsoul.soulforgery.blocks;
 import java.util.Random;
 
 import com.distinctsoul.soulforgery.Main;
-import com.distinctsoul.soulforgery.init.ModItems;
+import com.distinctsoul.soulforgery.init.ItemInit;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -27,7 +27,7 @@ public class BlockIgrianOre extends Block {
 	
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return ModItems.IGRIAN_SHARDS;
+		return ItemInit.IGRIAN_SHARDS;
 	}
 	
 	@Override

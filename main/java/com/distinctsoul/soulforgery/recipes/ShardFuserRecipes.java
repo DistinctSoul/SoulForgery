@@ -3,7 +3,7 @@ package com.distinctsoul.soulforgery.recipes;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.distinctsoul.soulforgery.init.ModItems;
+import com.distinctsoul.soulforgery.init.ItemInit;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Table;
@@ -20,7 +20,7 @@ public class ShardFuserRecipes {
 	}
 	
 	private ShardFuserRecipes() {
-		addFusingRecipe(new ItemStack(ModItems.IGRIAN_SHARDS), new ItemStack(ModItems.IGRIAN_SHARDS), new ItemStack(ModItems.IGRIAN_INGOT), 5.0F);
+		addFusingRecipe(new ItemStack(ItemInit.IGRIAN_SHARDS), new ItemStack(ItemInit.IGRIAN_SHARDS), new ItemStack(ItemInit.IGRIAN_INGOT), 5.0F);
 	}
 
 	

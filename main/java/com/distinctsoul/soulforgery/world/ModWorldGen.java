@@ -2,7 +2,7 @@ package com.distinctsoul.soulforgery.world;
 
 import java.util.Random;
 
-import com.distinctsoul.soulforgery.init.ModBlocks;
+import com.distinctsoul.soulforgery.init.BlockInit;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -25,7 +25,7 @@ public class ModWorldGen implements IWorldGenerator {
 	
 	private void generateOverworld(Random random, int chunkX, int chunkZ, World world, IChunkGenerator
 			chunkGenerator, IChunkProvider chunkProvider) {
-		generateOre(ModBlocks.IGRIAN_ORE.getDefaultState(), world, random, chunkX * 16, chunkZ * 16, 8, 14, 3, 2);
+		generateOre(BlockInit.IGRIAN_ORE.getDefaultState(), world, random, chunkX * 16, chunkZ * 16, 8, 14, 3, 2);
 	}
 	
 	private void generateOre(IBlockState ore, World world, Random random, int x, int z, int minY, int maxY, int size, int chances) {
